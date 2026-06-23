@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Bảng giá du lịch Đà Nẵng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="admin-body">
+  <header class="sub-hero">
+    <div class="container sub-hero-wrap">
+      <div>
+        <span class="pill">Admin panel</span>
+        <h1>Quản trị video bảng giá MP4</h1>
+        <p>Trang này chỉ dành cho admin đăng nhập để tải video bảng giá lên website.</p>
+      </div>
+      <a href="./index.html" class="btn btn-outline">← Về trang chủ</a>
+    </div>
+  </header>
+
+  <main class="container admin-layout">
+    <section class="card" id="setupNotice">
+      <h2>Cấu hình bắt buộc</h2>
+      <p>Hãy sửa file <strong>js/config.js</strong> bằng thông tin Supabase của bạn trước khi sử dụng chức năng đăng nhập và tải MP4.</p>
+    </section>
+
+    <section class="card" id="authCard">
+      <h2>Đăng nhập admin</h2>
+      <form id="loginForm" class="form-grid">
+        <label>
+          <span>Email admin</span>
+          <input type="email" id="email" placeholder="admin@example.com" required />
+        </label>
+        <label>
+          <span>Mật khẩu</span>
+          <input type="password" id="password" placeholder="••••••••" required />
+        </label>
+        <button class="btn btn-primary" type="submit">Đăng nhập</button>
+      </form>
+      <div id="authStatus" class="notice muted">Chưa đăng nhập.</div>
+      <button id="logoutBtn" class="btn btn-secondary hidden" type="button">Đăng xuất</button>
+    </section>
+
+    <section class="card hidden" id="uploadCard">
+      <h2>Tải video bảng giá</h2>
+      <form id="uploadForm" class="form-grid">
+        <label>
+          <span>Tiêu đề video</span>
+          <input type="text" id="title" placeholder="Bảng giá tour tháng này" required />
+        </label>
+        <label>
+          <span>Danh mục</span>
+          <select id="category" required>
+            <option value="Vé tham quan">Vé tham quan</option>
+            <option value="Tour trong ngày">Tour trong ngày</option>
+            <option value="Xe đưa đón">Xe đưa đón</option>
+            <option value="Thuê xe">Thuê xe</option>
+            <option value="Combo nghỉ dưỡng">Combo nghỉ dưỡng</option>
+          </select>
+        </label>
+        <label class="full-width">
+          <span>Mô tả ngắn</span>
+          <textarea id="description" rows="4" placeholder="Ví dụ: Bảng giá cập nhật các tour Bà Nà Hills, bán đảo Sơn Trà, Ngũ Hành Sơn..."></textarea>
+        </label>
+        <label class="full-width upload-box">
+          <span>Chọn file MP4</span>
+          <input type="file" id="videoFile" accept="video/mp4" required />
+          <small>Khuyến nghị: MP4, dung lượng vừa phải để tải lên nhanh hơn.</small>
+        </label>
+        <button class="btn btn-primary" type="submit">Tải video lên</button>
+      </form>
+      <div id="uploadStatus" class="notice muted">Sẵn sàng tải file.</div>
+    </section>
+
+    <section class="card hidden" id="videoManagerCard">
+      <h2>Danh sách video đã đăng</h2>
+      <div id="adminVideoList" class="video-grid compact"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/supabase-client.js"></script>
+  <script src="./js/admin.js"></script>
+</body>
+</html>
