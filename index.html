@@ -2,98 +2,109 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bảng giá dịch vụ du lịch Đà Nẵng</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bảng giá các dịch vụ du lịch tại Đà Nẵng</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f6f6f6;
+      color: #222;
+    }
+
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .video {
+      margin-top: 20px;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+    }
+  </style>
 </head>
+
 <body>
-  <header class="hero">
-    <nav class="nav container">
-      <div class="brand">Danang Travel Price</div>
-      <div class="nav-links">
-        <a href="#bang-gia">Bảng giá</a>
-        <a href="#video-bang-gia">Video MP4</a>
-        <a href="./admin.html" class="btn btn-outline">Trang admin</a>
-      </div>
-    </nav>
 
-    <div class="container hero-grid">
-      <div>
-        <span class="pill">Website miễn phí • dễ triển khai</span>
-        <h1>Bảng giá các dịch vụ du lịch tại thành phố Đà Nẵng</h1>
-        <p class="hero-text">
-          Website giới thiệu các dịch vụ phổ biến cho khách du lịch tại Đà Nẵng như vé tham quan,
-          tour, xe đưa đón, thuê xe và các gói trải nghiệm. Admin có thể đăng nhập và tải file MP4
-          chứa bảng giá để hiển thị trực tiếp trên website.
-        </p>
-        <div class="hero-actions">
-          <a href="#bang-gia" class="btn btn-primary">Xem bảng giá</a>
-          <a href="./admin.html" class="btn btn-secondary">Đăng nhập admin</a>
-        </div>
-      </div>
-      <div class="glass-card stats-card">
-        <h3>Điểm nổi bật</h3>
-        <ul class="feature-list">
-          <li>Giao diện tiếng Việt, tối ưu điện thoại</li>
-          <li>Trang admin riêng để tải video MP4</li>
-          <li>Hiển thị video bảng giá mới nhất cho khách</li>
-          <li>Phù hợp triển khai miễn phí trên GitHub Pages</li>
-        </ul>
-      </div>
+<header>
+  Bảng giá các dịch vụ du lịch tại Đà Nẵng
+</header>
+
+<div class="container">
+
+  <input type="text" id="ytLink" placeholder="Dán link YouTube vào đây..." />
+  <button onclick="addVideo()">Thêm video</button>
+
+  <div id="videoList"></div>
+
+</div>
+
+<script>
+function extractVideoId(url) {
+  const regex = /(?:youtube\.com.*v=|youtu\.be\/)([^&]+)/;
+  const match = url.match(regex);
+  return match ? match[1] : null;
+}
+
+function addVideo() {
+  const input = document.getElementById("ytLink");
+  const url = input.value.trim();
+  const videoId = extractVideoId(url);
+
+  if (!videoId) {
+    alert("Link YouTube không hợp lệ");
+    return;
+  }
+
+  const iframe = `
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
     </div>
-  </header>
+  `;
 
-  <main>
-    <section class="section container" id="bang-gia">
-      <div class="section-head">
-        <div>
-          <span class="section-tag">Danh mục tham khảo</span>
-          <h2>Bảng giá dịch vụ du lịch</h2>
-        </div>
-        <p class="section-desc">Bạn có thể thay đổi toàn bộ nội dung giá trong file <strong>js/app.js</strong> hoặc kết nối cơ sở dữ liệu sau.</p>
-      </div>
-      <div id="price-grid" class="price-grid"></div>
-    </section>
+  document.getElementById("videoList").innerHTML += iframe;
+  input.value = "";
+}
+</script>
 
-    <section class="section alt-section" id="video-bang-gia">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <span class="section-tag">Nội dung video</span>
-            <h2>Bảng giá dạng MP4 do admin đăng tải</h2>
-          </div>
-          <p class="section-desc">Khi cấu hình Supabase xong, các video MP4 được upload từ trang admin sẽ tự động xuất hiện tại đây.</p>
-        </div>
-        <div id="video-status" class="notice">Đang kiểm tra cấu hình video...</div>
-        <div id="video-list" class="video-grid"></div>
-      </div>
-    </section>
-
-    <section class="section container">
-      <div class="cta-card">
-        <div>
-          <span class="section-tag">Quản trị nội dung</span>
-          <h2>Muốn cập nhật bảng giá bằng video MP4?</h2>
-          <p>Đăng nhập trang admin, chọn file MP4, nhập tiêu đề và mô tả ngắn, sau đó nhấn tải lên.</p>
-        </div>
-        <a href="./admin.html" class="btn btn-primary">Mở trang admin</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-wrap">
-      <p>© 2026 Danang Travel Price. Static website demo.</p>
-      <a href="./admin.html">Quản trị viên</a>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./js/config.js"></script>
-  <script src="./js/supabase-client.js"></script>
-  <script src="./js/app.js"></script>
 </body>
 </html>
